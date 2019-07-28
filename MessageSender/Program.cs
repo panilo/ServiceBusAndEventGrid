@@ -19,7 +19,7 @@ namespace MessageSender
 
         static async Task MainAsync()
         {
-            const int numberOfMessages = 1;
+            const int numberOfMessages = 1000;
             TopicClient = new TopicClient(ServiceBusConnectionString, TopicName);
 
             Console.WriteLine("================================================");
@@ -41,9 +41,12 @@ namespace MessageSender
                 for (var i = 1; i <= numberOfMessagesToSend; i++)
                 {
                     // Create a new message to send to the queue
-                    string messageBody = $"Message {i}";
-                    var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+                    var rand = new Random();
+                    var randNum = rand.Next(1, 3);
 
+                    string messageBody = $"Message {i}";                                        
+                    var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+                    
                     // Write the body of the message to the console
                     Console.WriteLine($"Sending message: {messageBody}");
 

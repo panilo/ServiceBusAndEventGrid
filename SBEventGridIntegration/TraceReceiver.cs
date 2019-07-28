@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.WebJobs.Host;
+﻿using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,9 +11,10 @@ using System.Threading.Tasks;
 
 namespace SBEventGridIntegration
 {
-    public class TraceReceiver
-    {        
-        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
+    public static class TraceReceiver
+    {
+        [FunctionName("HttpTraceTrigger")]
+        public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
             // parse query parameter
